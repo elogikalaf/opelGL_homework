@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/elo/elo/code/openGL/screenSaver/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/MyOpenGLApp.dir/main.cpp.o -c /home/elo/elo/code/openGL/screenSaver/main.cpp",
+  "file": "/home/elo/elo/code/openGL/screenSaver/main.cpp"
+}
+]
