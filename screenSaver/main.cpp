@@ -7,10 +7,7 @@
 using namespace std;
 
 
-int currentShape = 0;
-int shapeDisplayTime = 100; // Reduced to 100 milliseconds for more frequent updates
-
-
+int currentPolygon = 0;
 
 void drawPolygon1() {
    glColor3f(1.0, 0.0, 0.0);
@@ -62,30 +59,29 @@ void drawPolygon5() {
    glEnd();
 }
 
-void drawScene(void) {
+void drawScene() {
    glClear(GL_COLOR_BUFFER_BIT);
 
-   // Based on the currentShape, call the corresponding draw function
-   switch (currentShape) {
-   case 0:
+   if (currentPolygon == 0) {
       drawPolygon1();
-      break;
-   case 1:
+   } else if (currentPolygon == 1) {
       drawPolygon2();
-      break;
-   case 2:
+   } else if (currentPolygon == 2) {
       drawPolygon3();
-      break;
-   case 3:
+   } else if (currentPolygon == 3) {
       drawPolygon4();
-      break;
-   case 4:
+   } else if (currentPolygon == 4) {
       drawPolygon5();
-   default:
-      break;
+   }
+
+   currentPolygon++;
+
+   if (currentPolygon >= 5) {
+      currentPolygon = 0;  // Reset to the first polygon
    }
 
    glFlush();
+   glutSwapBuffers();
 }
 
 // Initialization routine.
@@ -117,12 +113,15 @@ void keyInput(unsigned char key, int x, int y)
          break;
    }
 }
-void updateScene(void) {
-    srand(time(NULL));
-    currentShape = rand() % 5;
-    glutPostRedisplay();
+// void updateScene(void) {
+//     srand(time(NULL));
+//     currentShape = rand() % 5;
+//     glutPostRedisplay();
+// }
+void timer(int value) {
+    glutPostRedisplay(); // Request a redisplay
+    glutTimerFunc(1000, timer, 0); // Set the timer for the next polygon
 }
-
 
 // Main routine.
 int main(int argc, char **argv) 
@@ -137,10 +136,7 @@ int main(int argc, char **argv)
    glutInitWindowPosition(100, 100); 
    glutCreateWindow("experimentTriangles.cpp");
    glutDisplayFunc(drawScene); 
-   glutReshapeFunc(resize);  
-   glutKeyboardFunc(keyInput);
-   glutIdleFunc(updateScene);
-
+   glutTimerFunc(0, timer, 0);  
    glewExperimental = GL_TRUE;
    glewInit();
 
