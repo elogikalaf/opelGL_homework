@@ -1,0 +1,5 @@
+/home/elo/elo/code/openGL/squareTriangles/build/CMakeFiles/MyOpenGLApp.dir
+/home/elo/elo/code/openGL/squareTriangles/build/CMakeFiles/package.dir
+/home/elo/elo/code/openGL/squareTriangles/build/CMakeFiles/package_source.dir
+/home/elo/elo/code/openGL/squareTriangles/build/CMakeFiles/edit_cache.dir
+/home/elo/elo/code/openGL/squareTriangles/build/CMakeFiles/rebuild_cache.dir
