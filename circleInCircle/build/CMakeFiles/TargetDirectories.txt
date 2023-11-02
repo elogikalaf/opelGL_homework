@@ -1,4 +1,4 @@
-/home/elo/elo/code/openGL/circleInCircle/build/CMakeFiles/MyOpenGLApp.dir
+/home/elo/elo/code/openGL/circleInCircle/build/CMakeFiles/circleIncircle.dir
 /home/elo/elo/code/openGL/circleInCircle/build/CMakeFiles/package.dir
 /home/elo/elo/code/openGL/circleInCircle/build/CMakeFiles/package_source.dir
 /home/elo/elo/code/openGL/circleInCircle/build/CMakeFiles/edit_cache.dir

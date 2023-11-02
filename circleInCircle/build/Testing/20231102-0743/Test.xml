@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Site BuildName="Linux-g++"
-	BuildStamp="20231101-1233-Experimental"
+	BuildStamp="20231102-0743-Experimental"
 	Name="eloputer"
 	Generator="ctest-3.22.1"
 	CompilerName="/usr/bin/g++"
@@ -21,14 +21,14 @@
 	TotalVirtualMemory="2047"
 	TotalPhysicalMemory="15862"
 	LogicalProcessorsPerPhysical="2"
-	ProcessorClockFrequency="2600.07"
+	ProcessorClockFrequency="3400.04"
 	>
 	<Testing>
-		<StartDateTime>Nov 01 16:27 +0330</StartDateTime>
-		<StartTestTime>1698843448</StartTestTime>
+		<StartDateTime>Nov 02 14:04 +0330</StartDateTime>
+		<StartTestTime>1698921257</StartTestTime>
 		<TestList/>
-		<EndDateTime>Nov 01 16:27 +0330</EndDateTime>
-		<EndTestTime>1698843448</EndTestTime>
+		<EndDateTime>Nov 02 14:04 +0330</EndDateTime>
+		<EndTestTime>1698921257</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>

@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.10"
+						"string" : "3.0.0"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "openGL",
+					"name" : "circleIncircle",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "MyOpenGLApp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-MyOpenGLApp-Debug-2b6685c05afa14ab0ef4.json",
-					"name" : "MyOpenGLApp",
+					"id" : "circleIncircle::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-circleIncircle-Debug-f61bf00f279c094ae151.json",
+					"name" : "circleIncircle",
 					"projectIndex" : 0
 				}
 			]

@@ -144,7 +144,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=openGL
+CMAKE_PROJECT_NAME:STATIC=circleIncircle
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=0.1.0
@@ -345,13 +345,13 @@ OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 SITE:STRING=eloputer
 
 //Value Computed by CMake
-openGL_BINARY_DIR:STATIC=/home/elo/elo/code/openGL/circleInCircle/build
+circleIncircle_BINARY_DIR:STATIC=/home/elo/elo/code/openGL/circleInCircle/build
 
 //Value Computed by CMake
-openGL_IS_TOP_LEVEL:STATIC=ON
+circleIncircle_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-openGL_SOURCE_DIR:STATIC=/home/elo/elo/code/openGL/circleInCircle
+circleIncircle_SOURCE_DIR:STATIC=/home/elo/elo/code/openGL/circleInCircle
 
 
 ########################

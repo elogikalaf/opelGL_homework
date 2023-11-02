@@ -831,7 +831,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "openGL"
+			"value" : "circleIncircle"
 		},
 		{
 			"name" : "CMAKE_PROJECT_VERSION",
@@ -1834,7 +1834,7 @@
 			"value" : "eloputer"
 		},
 		{
-			"name" : "openGL_BINARY_DIR",
+			"name" : "circleIncircle_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1846,7 +1846,7 @@
 			"value" : "/home/elo/elo/code/openGL/circleInCircle/build"
 		},
 		{
-			"name" : "openGL_IS_TOP_LEVEL",
+			"name" : "circleIncircle_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1858,7 +1858,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "openGL_SOURCE_DIR",
+			"name" : "circleIncircle_SOURCE_DIR",
 			"properties" : 
 			[
 				{

@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "MyOpenGLApp"
+			"path" : "circleIncircle"
 		}
 	],
 	"backtrace" : 1,
@@ -25,13 +25,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 8,
+				"line" : 7,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 10,
+				"line" : 9,
 				"parent" : 0
 			}
 		]
@@ -52,7 +52,7 @@
 			]
 		}
 	],
-	"id" : "MyOpenGLApp::@6890427a1f51a3e7e1df",
+	"id" : "circleIncircle::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -62,7 +62,7 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "",
+				"fragment" : "-rdynamic",
 				"role" : "flags"
 			},
 			{
@@ -83,8 +83,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "MyOpenGLApp",
-	"nameOnDisk" : "MyOpenGLApp",
+	"name" : "circleIncircle",
+	"nameOnDisk" : "circleIncircle",
 	"paths" : 
 	{
 		"build" : ".",
