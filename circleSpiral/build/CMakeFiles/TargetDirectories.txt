@@ -1,0 +1,5 @@
+/home/elo/elo/code/openGL/circleSpiral/build/CMakeFiles/MyOpenGLApp.dir
+/home/elo/elo/code/openGL/circleSpiral/build/CMakeFiles/package.dir
+/home/elo/elo/code/openGL/circleSpiral/build/CMakeFiles/package_source.dir
+/home/elo/elo/code/openGL/circleSpiral/build/CMakeFiles/edit_cache.dir
+/home/elo/elo/code/openGL/circleSpiral/build/CMakeFiles/rebuild_cache.dir
