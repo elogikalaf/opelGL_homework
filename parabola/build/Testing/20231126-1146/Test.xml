@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Linux-g++"
+	BuildStamp="20231126-1146-Experimental"
+	Name="eloputer"
+	Generator="ctest-3.22.1"
+	CompilerName="/usr/bin/g++"
+	CompilerVersion="11.4.0"
+	OSName="Linux"
+	Hostname="eloputer"
+	OSRelease="6.2.0-37-generic"
+	OSVersion="#38~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov  2 18:01:13 UTC 2"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="158"
+	ProcessorCacheSize="12288"
+	NumberOfLogicalCPU="12"
+	NumberOfPhysicalCPU="6"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="15862"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="899.997"
+	>
+	<Testing>
+		<StartDateTime>Nov 26 15:16 +0330</StartDateTime>
+		<StartTestTime>1700999184</StartTestTime>
+		<TestList/>
+		<EndDateTime>Nov 26 15:16 +0330</EndDateTime>
+		<EndTestTime>1700999184</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/elo/elo/code/openGL/parabola/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/parabola.dir/main.cpp.o -c /home/elo/elo/code/openGL/parabola/main.cpp",
+  "file": "/home/elo/elo/code/openGL/parabola/main.cpp"
+}
+]
