@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/elo/elo/code/openGL/chain/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/chain.dir/main.cpp.o -c /home/elo/elo/code/openGL/chain/main.cpp",
+  "file": "/home/elo/elo/code/openGL/chain/main.cpp"
+}
+]

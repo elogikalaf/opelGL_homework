@@ -1,0 +1,5 @@
+/home/elo/elo/code/openGL/chain/build/CMakeFiles/chain.dir
+/home/elo/elo/code/openGL/chain/build/CMakeFiles/package.dir
+/home/elo/elo/code/openGL/chain/build/CMakeFiles/package_source.dir
+/home/elo/elo/code/openGL/chain/build/CMakeFiles/edit_cache.dir
+/home/elo/elo/code/openGL/chain/build/CMakeFiles/rebuild_cache.dir
