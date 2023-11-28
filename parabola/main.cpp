@@ -43,9 +43,28 @@ void drawScene(void)
    glBegin(GL_LINE_STRIP);
    for(i = -M; i <= M; ++i)
    { 
-      glVertex3f(100.0 * (float)(i*i)/(M*M), 50.0 + 50.0 * (float)i/M, 0.0 );
+      float x = 50.0 + 25.0 * (float)i/M;
+      float y = 50.0 * (float)(i*i)/(M*M);
+      glVertex3f( x , y , 0.0 );
+      cout << x << " " << y << endl;
    }
+   /*
+      for(i = -M; i <= M; ++i)
+   { 
+      float x = 50.0 + 50.0 * (float)i/M;
+      float y = 100 - 100.0 * (float)(i*i)/(M*M);
+      glVertex3f( x , y , 0.0 );
+      cout << x << " " << y << endl;
+   }*/
    glEnd();
+   /*
+    glBegin(GL_LINE_STRIP);
+    for (i = -M; i <= M; ++i)
+    {
+       glVertex3f(100.0 * (float)(i*i)/(M*M), 50.0 + 50.0 * (float)i/M, 0.0 );
+    }
+    glEnd();
+   */
   
    glFlush();
 }

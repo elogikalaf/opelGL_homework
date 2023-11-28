@@ -51,7 +51,6 @@ void drawScene(void)
    glBegin(GL_LINE_LOOP);
       for(i = 0; i < numVertices; ++i)
 	  {
-         glColor3f((float)rand()/(float)RAND_MAX, (float)rand()/(float)RAND_MAX, (float)rand()/(float)RAND_MAX); 
          glVertex3f(X-i + R * cos(t), Y +i+ R * sin(t), 0.0);
          t += 2 * PI / numVertices;
 	  }

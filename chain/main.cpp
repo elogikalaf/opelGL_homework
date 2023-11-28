@@ -30,6 +30,11 @@
 #define PI 3.14159265
 #define N 40.0 // Number of vertices on the boundary of the disc.
 
+static float R = 40.0; // Radius of circle.
+static float X = 50.0; // X-coordinate of center of circle.
+static float Y = 50.0; // Y-coordinate of center of circle.
+static int numVertices = 5000; // Number of vertices on circle.
+
 using namespace std;
 
 // Globals.
@@ -71,48 +76,50 @@ void drawScene(void)
 
    glPolygonMode(GL_FRONT, GL_FILL);
 
-   // Upper left circular annulus: the white disc overwrites the red disc.
-   // for (int i = 20; i <=80; i= i+10) {
-   //    glColor3f(1.0, 0.0, 0.0);
-   //    drawDisc(20.0, i, 75.0, 0.0);
-   //    glColor3f(1, 1, 1.0);
-   //    drawDisc(15.0, i, 75.0, 0.0);
-   //    glColor3f(0.0, 0.0, 1.0);
-   //    drawDisc(20.0, i, 50.0, 0.0);
-   //    glColor3f(1, 1, 1.0);
-   //    drawDisc(15.0, i, 50.0, 0.0);
-   //    glFlush();
-   //    glClear(GL_COLOR_BUFFER_BIT);
-   //    usleep(100000);
-   // }
-      // Lower circular annulus: with a true hole.
 
-   for (int markaz = 20; markaz <=80; markaz = markaz+10) {
-      if (isWire) glPolygonMode(GL_FRONT, GL_LINE);else glPolygonMode(GL_FRONT, GL_FILL);
+      float t = 0;
+      int M = 20;
       glColor3f(1.0, 0.0, 0.0);
-      glBegin(GL_TRIANGLE_STRIP);
-      for(i = 0; i <= N; ++i) {
-         angle = 2 * PI * i / N; 
-         glVertex3f(markaz + cos(angle) * 15.0, 30 + sin(angle) * 15.0, 0.0);
-         glVertex3f(markaz + cos(angle) * 20.0, 30 + sin(angle) * 20.0, 0.0);
-      }
-      glColor3f(0.0, 0.0, 1.0);
-      for(i = 0; i <= N; ++i) {
-         angle = 2 * PI * i / N; 
-         glVertex3f(markaz + cos(angle) * 15.0, 50 + sin(angle) * 15.0, 0.0);
-         glVertex3f(markaz + cos(angle) * 20.0, 50 + sin(angle) * 20.0, 0.0);
-      }
-      glColor3f(0.0, 1.0, 0.0);
-      for(i = 0; i <= N; ++i) {
-         angle = 2 * PI * i / N; 
-         glVertex3f(markaz + cos(angle) * 15.0, 70 + sin(angle) * 15.0, 0.0);
-         glVertex3f(markaz + cos(angle) * 20.0, 70 + sin(angle) * 20.0, 0.0);
-      }
-      glEnd();
-      glFlush();
-      glClear(GL_COLOR_BUFFER_BIT);
-      usleep(100000);
-   }
+         // glVertex3f(X + R * cos(t), Y + R * sin(t), 0.0);
+         // t += 2 * PI / numVertices;
+      for (int ver = 0; ver < numVertices/2; ++ver) {
+      
+         glBegin(GL_TRIANGLE_STRIP);
+         if (isWire) glPolygonMode(GL_FRONT, GL_LINE);else glPolygonMode(GL_FRONT, GL_FILL);
+         float x = X + 1.5*R * cos(t);
+         float y = Y + 1.5*R * sin(t);
+         glColor3f(0.0, 1.0, 0.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         glEnd();
+         x = X + R * cos(t);
+         y = Y + R * sin(t);
+         glBegin(GL_TRIANGLE_STRIP);
+         glColor3f(1.0, 0.0, 0.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         glEnd();
+         x = X + R/2 * cos(t);
+         y = Y + R/2 * sin(t);
+         glBegin(GL_TRIANGLE_STRIP);
+         glColor3f(0.0, 0.0, 1.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         t -= 2 * PI / numVertices;
+         glEnd();
+         glFlush();
+         glClear(GL_COLOR_BUFFER_BIT);
+         usleep(1000);
+    }
 }
 
 // Initialization routine.
@@ -127,7 +134,7 @@ void resize(int w, int h)
    glViewport(0, 0, w, h); 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
+   glOrtho(-100.0, 200.0, -100.0, 200.0, -1.0, 1.0);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 }
@@ -153,14 +160,12 @@ void keyInput(unsigned char key, int x, int y)
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
-   cout << "Interaction:" << endl;
-   cout << "Press the space bar to toggle between wirefrime and filled for the lower annulus." << endl;  
+   cout <<"hit" << endl;
 }
 
 // Main routine.
 int main(int argc, char **argv) 
 {
-   printInteraction();
    glutInit(&argc, argv);
 
    glutInitContextVersion(4, 3);
