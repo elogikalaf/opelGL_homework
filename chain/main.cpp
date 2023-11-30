@@ -33,7 +33,7 @@
 static float R = 40.0; // Radius of circle.
 static float X = 50.0; // X-coordinate of center of circle.
 static float Y = 50.0; // Y-coordinate of center of circle.
-static int numVertices = 5000; // Number of vertices on circle.
+static int numVertices = 10; // Number of vertices on circle.
 
 using namespace std;
 
@@ -48,6 +48,9 @@ void writeBitmapString(void *font, const char *string)
 
    for (c = string; *c != '\0'; c++) glutBitmapCharacter(font, *c);
 } 
+void timer(int value) {
+    glutTimerFunc(300000, timer, 0);  // Adjust the time interval as needed
+}
 
 // Function to draw a disc with center at (X, Y, Z), radius R, parallel to the xy-plane.
 void drawDisc(float R, float X, float Y, float Z)
@@ -80,12 +83,9 @@ void drawScene(void)
       float t = 0;
       int M = 20;
       glColor3f(1.0, 0.0, 0.0);
-         // glVertex3f(X + R * cos(t), Y + R * sin(t), 0.0);
-         // t += 2 * PI / numVertices;
       for (int ver = 0; ver < numVertices/2; ++ver) {
-      
-         glBegin(GL_TRIANGLE_STRIP);
          if (isWire) glPolygonMode(GL_FRONT, GL_LINE);else glPolygonMode(GL_FRONT, GL_FILL);
+         glBegin(GL_TRIANGLE_STRIP);
          float x = X + 1.5*R * cos(t);
          float y = Y + 1.5*R * sin(t);
          glColor3f(0.0, 1.0, 0.0);
@@ -117,9 +117,50 @@ void drawScene(void)
          t -= 2 * PI / numVertices;
          glEnd();
          glFlush();
+         usleep(70000);
          glClear(GL_COLOR_BUFFER_BIT);
-         usleep(1000);
     }
+      glColor3f(1.0, 0.0, 0.0);
+      for (int ver = 0; ver < numVertices/2; ++ver) {
+         if (isWire) glPolygonMode(GL_FRONT, GL_LINE);else glPolygonMode(GL_FRONT, GL_FILL);
+         glBegin(GL_TRIANGLE_STRIP);
+         float x = X + 1.5*R * cos(t);
+         float y = Y + 1.5*R * sin(t);
+         glColor3f(0.0, 1.0, 0.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         glEnd();
+         x = X + R * cos(t);
+         y = Y + R * sin(t);
+         glBegin(GL_TRIANGLE_STRIP);
+         glColor3f(1.0, 0.0, 0.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         glEnd();
+         x = X + R/2 * cos(t);
+         y = Y + R/2 * sin(t);
+         glBegin(GL_TRIANGLE_STRIP);
+         glColor3f(0.0, 0.0, 1.0);
+         for(i = 0; i <= N; ++i) {
+            angle = 2 * PI * i / N; 
+            glVertex3f(x + cos(angle) * 15.0, 20 + y + sin(angle) * 15.0, 0.0);
+            glVertex3f(x + cos(angle) * 20.0, 20 + y + sin(angle) * 20.0, 0.0);
+         }
+         t += 2 * PI / numVertices;
+         glEnd();
+         glFlush();
+         usleep(70000);
+         glClear(GL_COLOR_BUFFER_BIT);
+
+      }
+      glutPostRedisplay();
+   
 }
 
 // Initialization routine.
@@ -170,7 +211,7 @@ int main(int argc, char **argv)
 
    glutInitContextVersion(4, 3);
    glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
-
+   printInteraction();
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_DEPTH); 
    glutInitWindowSize(500, 500);
    glutInitWindowPosition(100, 100); 

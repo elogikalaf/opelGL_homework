@@ -34,7 +34,7 @@ using namespace std;
 static float R = 40.0; // Radius of circle.
 static float X = 50.0; // X-coordinate of center of circle.
 static float Y = 50.0; // Y-coordinate of center of circle.
-static int numVertices = 5; // Number of vertices on circle.
+static int numVertices = 3; // Number of vertices on circle.
 
 // Drawing routine.
 void drawScene(void)

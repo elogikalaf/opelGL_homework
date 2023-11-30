@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/elo/elo/code/openGL/mouse/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/mouse.dir/main.cpp.o -c /home/elo/elo/code/openGL/mouse/main.cpp",
+  "file": "/home/elo/elo/code/openGL/mouse/main.cpp"
+}
+]

@@ -49,11 +49,11 @@ void drawScene(void)
    // Draw a line strip with vertices at equal angles apart on a spiraling circle
    // with center at (X, Y).
    glBegin(GL_LINE_STRIP);
-      for(i = 0; i < 20 * numVertices; ++i)
+      for(i = 0; i <  20 * numVertices; ++i)
 	  {
          glVertex3f(X + R * cos(t), Y + R * sin(t), 0.0);
          t += 2 * PI / numVertices;
-         R -= R/50000; // Decrease the radius for a spiraling effect.
+         R -= R/70000; // Decrease the radius for a spiraling effect.
 	  }
    glEnd();
 

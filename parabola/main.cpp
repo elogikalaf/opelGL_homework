@@ -40,32 +40,47 @@ void drawScene(void)
    
    // The 2M+1 vertices on the parabola are equally spaced in x-coordinates.
    // The parabola is translated and scaled to center it in the window.
+   //1
    glBegin(GL_LINE_STRIP);
    for(i = -M; i <= M; ++i)
    { 
       float x = 50.0 + 25.0 * (float)i/M;
-      float y = 50.0 * (float)(i*i)/(M*M);
-      glVertex3f( x , y , 0.0 );
+      float y = 100.0 * (float)(i*i)/(M*M);
+      glVertex3f( x, y , 0.0 );
       cout << x << " " << y << endl;
    }
-   /*
-      for(i = -M; i <= M; ++i)
-   { 
-      float x = 50.0 + 50.0 * (float)i/M;
-      float y = 100 - 100.0 * (float)(i*i)/(M*M);
-      glVertex3f( x , y , 0.0 );
-      cout << x << " " << y << endl;
-   }*/
    glEnd();
-   /*
-    glBegin(GL_LINE_STRIP);
-    for (i = -M; i <= M; ++i)
-    {
-       glVertex3f(100.0 * (float)(i*i)/(M*M), 50.0 + 50.0 * (float)i/M, 0.0 );
-    }
-    glEnd();
-   */
-  
+
+
+   glBegin(GL_LINE_STRIP);
+   for(i = -M; i <= M; ++i)
+   { 
+      float x = 50.0 + 25.0 * (float)i/M;
+      float y = 100.0 * (float)(i*i)/(M*M);
+      glVertex3f( y, x , 0.0 );
+      cout << x << " " << y << endl;
+   }
+   glEnd();
+
+   //3
+   glBegin(GL_LINE_STRIP);
+   for(i = -M; i <= M; ++i)
+   { 
+      float x = 50.0 + 25.0 * (float)i/M;
+      float y = 100.0 * (float)(i*i)/(M*M);
+      glVertex3f( -y ,-x  , 0.0 );
+   }
+   glEnd();
+
+   //4
+   glBegin(GL_LINE_STRIP);
+   for(i = -M; i <= M; ++i)
+   { 
+      float x = 50.0 + 25.0 * (float)i/M;
+      float y = 100.0 * (float)(i*i)/(M*M);
+      glVertex3f( x, -y + 100 , 0.0 );
+   }
+   glEnd();
    glFlush();
 }
 
@@ -81,7 +96,7 @@ void resize(int w, int h)
    glViewport(0, 0, w, h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
+   glOrtho(-100.0, 200.0, -100.0, 200.0, -1.0, 1.0);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 }
