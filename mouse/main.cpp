@@ -1,19 +1,19 @@
-//////////////////////////////////////////////////////////////////////          
-// mouse.cpp
+///////////////////////////////////////////////////////////////////////////////////         
+// mouseMotion.cpp
 // 
-// This program illustrates interaction using the mouse.
+// This program, based on mouse.cpp, additionally allows the user to drag the point
+// just created by moving the mouse.
 // 
 // Interaction:
-// Left mouse click to draw a square point, right mouse click to exit.
+// Left mouse click to draw a square point, keep left button pressed to drag point, 
+// right mouse click to exit.
 // 
 // Sumanta Guha.
-////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////// 
 
 #include <cstdlib>
 #include <vector>
 #include <iostream>
-#include <unistd.h>          
-
 
 #ifdef __APPLE__
 #  include <GL/glew.h>
@@ -41,7 +41,20 @@ public:
    {
 	  xVal = x; yVal = y;
    }
+   Point(){};
+   void setCoords(int x, int y)
+   {
+	  xVal = x; yVal = y;
+   }
    void drawPoint(void); // Function to draw a point.
+   int getCoordsX()
+   {
+      return xVal;
+   }
+   int getCoordsY()
+   {
+      return yVal;
+   }
 private:
    int xVal, yVal; // x and y co-ordinates of point.
    static float size; // Size of point.
@@ -64,44 +77,73 @@ vector<Point> points;
 // Iterator to traverse a Point array.
 vector<Point>::iterator pointsIterator; 
 
+// Currently clicked point.
+Point currentPoint;
+
+// Last Time a Point was clicked.
+Point lastClickedPoint;
+
+pair<Point, Point> lineCoordinates;
+
+
+
+
 // Drawing routine.
 void drawScene(void)
 {
    glClear(GL_COLOR_BUFFER_BIT);
    glColor3f(0.0, 0.0, 0.0); 
-//    usleep(1000000);
-
-   // Loop through the points array drawing each point.
-   pointsIterator = points.begin();
-   int i = 0;
-   while(pointsIterator != points.end() ) 
-   {	   
-	  pointsIterator->drawPoint();
-      usleep(1000000);
-	  pointsIterator++;
-      glFlush();
-   }
  
+   cout << lineCoordinates.first.getCoordsX() << " " << lineCoordinates.second.getCoordsX() << endl;
+   // Draw the line between the last clicked point and the current point.
+   glBegin(GL_LINES);
+   glVertex2f(lineCoordinates.first.getCoordsX(), lineCoordinates.first.getCoordsY());
+   glVertex2f(lineCoordinates.second.getCoordsX(), lineCoordinates.second.getCoordsY());
+   glEnd();
+
+   glFlush();
 }
 
 // Mouse callback routine.
 void mouseControl(int button, int state, int x, int y)
 {
-   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+   // Store the clicked point in the currentPoint variable when left button is pressed.
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 
-	  // Store the clicked point in the points array after correcting
-	  // from event to OpenGL co-ordinates.
-      points.push_back( Point(x, height - y) ); 
+      points.push_back(currentPoint);
+      currentPoint = Point(x, height - y); 
+      lastClickedPoint.setCoords(x, height - y);
+      lineCoordinates.first = lastClickedPoint;
+      lineCoordinates.second = currentPoint;
+   }
 
+
+   // Store the currentPoint in the points vector when left button is released.
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+      lineCoordinates.first = lastClickedPoint;
+      lineCoordinates.second = currentPoint;
+   }
+   
    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) exit(0);
    
+   glutPostRedisplay();
+}
+
+// Mouse motion callback routine.
+void mouseMotion(int x, int y)
+{
+   // Update the location of the current point as the mouse moves with button pressed.
+   currentPoint.setCoords(x, height - y);   
+   lineCoordinates.second = currentPoint;
+
+
    glutPostRedisplay();
 }
 
 // Initialization routine.
 void setup(void) 
 {
-   glClearColor(1.0, 1.0, 1.0, 0.0);  
+   glClearColor(1.0, 1.0, 1.0, 0.0); 
 }
 
 // OpenGL window reshape routine.
@@ -139,7 +181,8 @@ void keyInput(unsigned char key, int x, int y)
 void printInteraction(void)
 {
    cout << "Interaction:" << endl;
-   cout << "Left mouse click to draw a square point, right mouse click to exit." << endl; 
+   cout << "Left mouse click to draw a square point, keep left button pressed to drag point," << endl 
+        << "right mouse click to exit." << endl;
 }
 
 // Main routine.
@@ -154,13 +197,16 @@ int main(int argc, char **argv)
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA); 
    glutInitWindowSize(500, 500);
    glutInitWindowPosition(100, 100); 
-   glutCreateWindow("mouse.cpp");
+   glutCreateWindow("mouseMotion.cpp");
    glutDisplayFunc(drawScene); 
    glutReshapeFunc(resize);  
    glutKeyboardFunc(keyInput);
 
-   // Register the mouse callback function. 
+   // Register the mouse callback function.
    glutMouseFunc(mouseControl); 
+
+   // Register the mouse motion callback function.
+   glutMotionFunc(mouseMotion);
 
    glewExperimental = GL_TRUE; 
    glewInit(); 
