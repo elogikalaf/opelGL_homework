@@ -1,16 +1,3 @@
-///////////////////////////////////////////////////////////////////////////////////         
-// mouseMotion.cpp
-// 
-// This program, based on mouse.cpp, additionally allows the user to drag the point
-// just created by moving the mouse.
-// 
-// Interaction:
-// Left mouse click to draw a square point, keep left button pressed to drag point, 
-// right mouse click to exit.
-// 
-// Sumanta Guha.
-/////////////////////////////////////////////////////////////////////////////////// 
-
 #include <cstdlib>
 #include <vector>
 #include <iostream>
@@ -70,6 +57,30 @@ void Point::drawPoint(void)
    glVertex3f(xVal, yVal, 0.0);
    glEnd();   
 }
+// Line class
+class Line
+{
+   public:
+      Line(Point p1, Point p2) 
+      {
+         this->p1 = p1;
+         this->p2 = p2;
+      }
+      void setPoints(Point p1, Point p2){
+         this->p1 = p1;
+         this->p2 = p2;
+      }
+      void drawLine(void) {
+         glBegin(GL_LINES);
+         glVertex2f(p1.getCoordsX(), p1.getCoordsY());
+         glVertex2f(p2.getCoordsX(), p2.getCoordsY());   
+         glEnd();
+         glFlush();
+      }
+   private:
+      Point p1;
+      Point p2;
+};
 
 // Vector of points.
 vector<Point> points;
@@ -83,7 +94,12 @@ Point currentPoint;
 // Last Time a Point was clicked.
 Point lastClickedPoint;
 
-pair<Point, Point> lineCoordinates;
+// a vector to store all lines
+vector<Line> lines;
+
+// Iterator to traverse a Point array.
+vector<Line>::iterator linesIterator;
+
 
 
 
@@ -91,17 +107,16 @@ pair<Point, Point> lineCoordinates;
 // Drawing routine.
 void drawScene(void)
 {
+   glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
    glClear(GL_COLOR_BUFFER_BIT);
    glColor3f(0.0, 0.0, 0.0); 
- 
-   cout << lineCoordinates.first.getCoordsX() << " " << lineCoordinates.second.getCoordsX() << endl;
-   // Draw the line between the last clicked point and the current point.
-   glBegin(GL_LINES);
-   glVertex2f(lineCoordinates.first.getCoordsX(), lineCoordinates.first.getCoordsY());
-   glVertex2f(lineCoordinates.second.getCoordsX(), lineCoordinates.second.getCoordsY());
-   glEnd();
+   linesIterator = lines.begin();
+   while(linesIterator != lines.end())
+   {
+      linesIterator->drawLine();
+      linesIterator++;
+   }
 
-   glFlush();
 }
 
 // Mouse callback routine.
@@ -113,15 +128,17 @@ void mouseControl(int button, int state, int x, int y)
       points.push_back(currentPoint);
       currentPoint = Point(x, height - y); 
       lastClickedPoint.setCoords(x, height - y);
-      lineCoordinates.first = lastClickedPoint;
-      lineCoordinates.second = currentPoint;
-   }
+      Line line(lastClickedPoint, currentPoint);  
+      lines.push_back(line);
+      glutPostRedisplay();
 
+   }
 
    // Store the currentPoint in the points vector when left button is released.
    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
-      lineCoordinates.first = lastClickedPoint;
-      lineCoordinates.second = currentPoint;
+      Line line(lastClickedPoint, currentPoint);
+      lines.push_back(line);
+      glutPostRedisplay();
    }
    
    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) exit(0);
@@ -134,7 +151,7 @@ void mouseMotion(int x, int y)
 {
    // Update the location of the current point as the mouse moves with button pressed.
    currentPoint.setCoords(x, height - y);   
-   lineCoordinates.second = currentPoint;
+   Line line(lastClickedPoint, currentPoint);
 
 
    glutPostRedisplay();
