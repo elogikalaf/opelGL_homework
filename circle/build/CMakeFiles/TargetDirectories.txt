@@ -1,0 +1,5 @@
+/home/elo/elo/code/openGL/circle/build/CMakeFiles/circle.dir
+/home/elo/elo/code/openGL/circle/build/CMakeFiles/package.dir
+/home/elo/elo/code/openGL/circle/build/CMakeFiles/package_source.dir
+/home/elo/elo/code/openGL/circle/build/CMakeFiles/edit_cache.dir
+/home/elo/elo/code/openGL/circle/build/CMakeFiles/rebuild_cache.dir

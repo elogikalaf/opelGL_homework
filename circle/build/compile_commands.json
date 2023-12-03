@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/elo/elo/code/openGL/circle/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/circle.dir/main.cpp.o -c /home/elo/elo/code/openGL/circle/main.cpp",
+  "file": "/home/elo/elo/code/openGL/circle/main.cpp"
+}
+]

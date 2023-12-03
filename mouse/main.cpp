@@ -107,21 +107,27 @@ vector<Line>::iterator linesIterator;
 // Drawing routine.
 void drawScene(void)
 {
-   glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
-   glClear(GL_COLOR_BUFFER_BIT);
-   glColor3f(0.0, 0.0, 0.0); 
-   linesIterator = lines.begin();
-   while(linesIterator != lines.end())
-   {
-      linesIterator->drawLine();
-      linesIterator++;
-   }
+  glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
+  glClear(GL_COLOR_BUFFER_BIT);
+  glColor3f(0.0, 0.0, 0.0); 
+  linesIterator = lines.begin();
+  pointsIterator = points.begin();
+  while(pointsIterator != points.end())
+  {
+    pointsIterator->drawPoint();
+    pointsIterator++;
+  }
+  while(linesIterator != lines.end())
+  {
+    linesIterator->drawLine();
+    linesIterator++;
+  }
 
-   lastClickedPoint.drawPoint();
-   currentPoint.drawPoint();
+  lastClickedPoint.drawPoint();
+  currentPoint.drawPoint();
 
-   Line currentLine(lastClickedPoint, currentPoint);
-   currentLine.drawLine();
+  Line currentLine(lastClickedPoint, currentPoint);
+  currentLine.drawLine();
 
 }
 
