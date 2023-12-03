@@ -117,6 +117,12 @@ void drawScene(void)
       linesIterator++;
    }
 
+   lastClickedPoint.drawPoint();
+   currentPoint.drawPoint();
+
+   Line currentLine(lastClickedPoint, currentPoint);
+   currentLine.drawLine();
+
 }
 
 // Mouse callback routine.
