@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <cmath>
+
 
 #ifdef __APPLE__
 #  include <GL/glew.h>
@@ -17,8 +19,11 @@
 using namespace std;
 
 // Globals.
+const int numVertices = 50; // Number of vertices on circle.
 static int width, height; // OpenGL window size.
 static float pointSize = 3.0; // Size of point
+#define PI 3.14159265358979324
+
 
 // Point class.
 class Point
@@ -81,7 +86,69 @@ class Line
       Point p1;
       Point p2;
 };
+class Circle 
+{
+   public:
+      Circle(Point p1, Point p2)
+      {
+         this->p1 = p1;
+         this->p2 = p2;
+      }
 
+      void setPoints(Point p1, Point p2){
+         this->p1 = p1;
+         this->p2 = p2;
+      }
+      void drawCircle(void)
+      {
+         float t = 0;
+         glBegin(GL_LINE_LOOP);
+         // R = distance between p1 and p2
+         float R = sqrt(pow(p2.getCoordsX() - p1.getCoordsX(), 2) + pow(p2.getCoordsY() - p1.getCoordsY(), 2));
+         glBegin(GL_LINE_LOOP);
+         for (int i = 0; i < numVertices; ++i)
+         {
+            glVertex3f(p1.getCoordsX() + R * cos(t), p1.getCoordsY() + R * sin(t), 0.0);
+            t += 2 * PI / numVertices;
+         }
+         glEnd();
+         glFlush();
+      }
+
+   private:
+      Point p1;
+      Point p2;
+
+};
+class Square 
+{
+   public:
+      Square(Point p1, Point p2)
+      {
+         this->p1 = p1;
+         this->p2 = p2;
+      }
+
+      void setPoints(Point p1, Point p2){
+         this->p1 = p1;
+         this->p2 = p2;
+      }
+      void drawSquare(void)
+      {
+         glBegin(GL_LINE_LOOP);
+         glVertex2f(p1.getCoordsX(), p1.getCoordsY());
+         glVertex2f(p1.getCoordsX(), p2.getCoordsY());
+         glVertex2f(p2.getCoordsX(), p2.getCoordsY());
+         glVertex2f(p2.getCoordsX(), p1.getCoordsY());
+         glEnd();
+         glFlush();
+      }
+
+   private:
+      Point p1;
+      Point p2;
+
+};
 // Vector of points.
 vector<Point> points;
 
@@ -97,8 +164,20 @@ Point lastClickedPoint;
 // a vector to store all lines
 vector<Line> lines;
 
-// Iterator to traverse a Point array.
+// Iterator to traverse a Line array.
 vector<Line>::iterator linesIterator;
+
+/// a vector to hold all circles
+vector<Circle> circles;
+
+// Iterator oto traverse a Circle array.
+vector<Circle>::iterator circleIterator;
+
+// a vector to hold all squares
+vector<Square> squares;
+
+// Iterator to traverse a Sqare array
+vector<Square>::iterator squareIterator;
 
 
 
@@ -112,22 +191,41 @@ void drawScene(void)
   glColor3f(0.0, 0.0, 0.0); 
   linesIterator = lines.begin();
   pointsIterator = points.begin();
+  circleIterator = circles.begin();
+  squareIterator = squares.begin();
+  while(squareIterator != squares.end())
+  {
+   squareIterator->drawSquare();
+   squareIterator++;
+  }
+  while(circleIterator != circles.end())
+  {
+   circleIterator->drawCircle();
+   circleIterator++;
+  }
   while(pointsIterator != points.end())
   {
     pointsIterator->drawPoint();
     pointsIterator++;
   }
-  while(linesIterator != lines.end())
-  {
-    linesIterator->drawLine();
-    linesIterator++;
-  }
+//   while(linesIterator != lines.end())
+//   {
+//     linesIterator->drawLine();
+//     linesIterator++;
+//   }
+  Circle currentCircle(lastClickedPoint, currentPoint);
+  currentCircle.drawCircle();
+
+  Square currentSquare(lastClickedPoint, currentPoint);
+  currentSquare.drawSquare();
 
   lastClickedPoint.drawPoint();
   currentPoint.drawPoint();
 
-  Line currentLine(lastClickedPoint, currentPoint);
-  currentLine.drawLine();
+
+//   Line currentLine(lastClickedPoint, currentPoint);
+//   currentLine.drawLine();
+  
 
 }
 
@@ -142,14 +240,22 @@ void mouseControl(int button, int state, int x, int y)
       lastClickedPoint.setCoords(x, height - y);
       Line line(lastClickedPoint, currentPoint);  
       lines.push_back(line);
+      Circle circle(lastClickedPoint, currentPoint);
+      circles.push_back(circle);
+      Square square(lastClickedPoint, currentPoint);
+      squares.push_back(square);
       glutPostRedisplay();
 
    }
 
    // Store the currentPoint in the points vector when left button is released.
    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+      Circle circle(lastClickedPoint, currentPoint);
+      circles.push_back(circle);
       Line line(lastClickedPoint, currentPoint);
       lines.push_back(line);
+      Square square(lastClickedPoint, currentPoint);
+      squares.push_back(square);
       glutPostRedisplay();
    }
    
