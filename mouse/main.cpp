@@ -22,6 +22,7 @@ using namespace std;
 const int numVertices = 50; // Number of vertices on circle.
 static int width, height; // OpenGL window size.
 static float pointSize = 3.0; // Size of point
+static int shape = 3;
 #define PI 3.14159265358979324
 
 
@@ -118,42 +119,41 @@ class Circle
    private:
       Point p1;
       Point p2;
-
 };
-class Square 
+class Square
 {
-   public:
-      Square(Point p1, Point p2)
-      {
-         this->p1 = p1;
-         this->p2 = p2;
-      }
+public:
+   Square(Point p1, Point p2)
+   {
+      this->p1 = p1;
+      this->p2 = p2;
+   }
 
-      void setPoints(Point p1, Point p2){
-         this->p1 = p1;
-         this->p2 = p2;
-      }
-      void drawSquare(void)
-      {
-         glBegin(GL_LINE_LOOP);
-         glVertex2f(p1.getCoordsX(), p1.getCoordsY());
-         glVertex2f(p1.getCoordsX(), p2.getCoordsY());
-         glVertex2f(p2.getCoordsX(), p2.getCoordsY());
-         glVertex2f(p2.getCoordsX(), p1.getCoordsY());
-         glEnd();
-         glFlush();
-      }
+   void setPoints(Point p1, Point p2)
+   {
+      this->p1 = p1;
+      this->p2 = p2;
+   }
+   void drawSquare(void)
+   {
+      glBegin(GL_LINE_LOOP);
+      glVertex2f(p1.getCoordsX(), p1.getCoordsY());
+      glVertex2f(p1.getCoordsX(), p2.getCoordsY());
+      glVertex2f(p2.getCoordsX(), p2.getCoordsY());
+      glVertex2f(p2.getCoordsX(), p1.getCoordsY());
+      glEnd();
+      glFlush();
+   }
 
-   private:
-      Point p1;
-      Point p2;
-
+private:
+   Point p1;
+   Point p2;
 };
 // Vector of points.
 vector<Point> points;
 
 // Iterator to traverse a Point array.
-vector<Point>::iterator pointsIterator; 
+vector<Point>::iterator pointsIterator;
 
 // Currently clicked point.
 Point currentPoint;
@@ -179,89 +179,176 @@ vector<Square> squares;
 // Iterator to traverse a Sqare array
 vector<Square>::iterator squareIterator;
 
-
-
-
-
 // Drawing routine.
 void drawScene(void)
 {
-  glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
-  glClear(GL_COLOR_BUFFER_BIT);
-  glColor3f(0.0, 0.0, 0.0); 
-  linesIterator = lines.begin();
-  pointsIterator = points.begin();
-  circleIterator = circles.begin();
-  squareIterator = squares.begin();
-  while(squareIterator != squares.end())
-  {
-   squareIterator->drawSquare();
-   squareIterator++;
-  }
-  while(circleIterator != circles.end())
-  {
-   circleIterator->drawCircle();
-   circleIterator++;
-  }
-  while(pointsIterator != points.end())
-  {
-    pointsIterator->drawPoint();
-    pointsIterator++;
-  }
-//   while(linesIterator != lines.end())
-//   {
-//     linesIterator->drawLine();
-//     linesIterator++;
-//   }
-  Circle currentCircle(lastClickedPoint, currentPoint);
-  currentCircle.drawCircle();
+   glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
+   glClear(GL_COLOR_BUFFER_BIT);
+   glColor3f(0.0, 0.0, 0.0);
 
-  Square currentSquare(lastClickedPoint, currentPoint);
-  currentSquare.drawSquare();
+   glFlush();
 
-  lastClickedPoint.drawPoint();
-  currentPoint.drawPoint();
+   // lines
+   linesIterator = lines.begin();
+   while (linesIterator != lines.end())
+   {
+      linesIterator->drawLine();
+      linesIterator++;
+   }
+   // points
+   pointsIterator = points.begin();
+   while (pointsIterator != points.end())
+   {
+      pointsIterator->drawPoint();
+      pointsIterator++;
+   }
 
+   // circle
+   circleIterator = circles.begin();
+   while (circleIterator != circles.end())
+   {
+      circleIterator->drawCircle();
+      circleIterator++;
+   }
+   // square
+   squareIterator = squares.begin();
+   while (squareIterator != squares.end())
+   {
+      squareIterator->drawSquare();
+      squareIterator++;
+   }
 
-//   Line currentLine(lastClickedPoint, currentPoint);
-//   currentLine.drawLine();
-  
+   lastClickedPoint.drawPoint();
+   currentPoint.drawPoint();
 
+   switch (shape)
+   {
+   case 0:
+   {
+      if (lines.size() >= 1)
+      {
+         Line currentLine(lastClickedPoint, currentPoint);
+         currentLine.drawLine();
+      }
+      break;
+   }
+
+   case 2:
+   {
+      if (circles.size() >= 1)
+      {
+         Circle currentCircle(lastClickedPoint, currentPoint);
+         currentCircle.drawCircle();
+      }
+      break;
+   }
+
+   case 3:
+   {
+      if (squares.size() >= 1)
+      {
+         Square currentSquare(lastClickedPoint, currentPoint);
+         currentSquare.drawSquare();
+      }
+      break;
+   }
+   }
+
+   glFlush();
 }
+
+void keyInput(unsigned char key, int x, int y)
+{
+   switch (key) 
+   {
+      case 27:
+         exit(0);
+         break;
+      case '1':
+         shape = 0;
+         glutPostRedisplay();
+         break;
+      case '2':
+         shape = 2;
+         glutPostRedisplay();
+         break;
+      case '3':
+         shape = 3;
+         glutPostRedisplay();
+         break;
+      default:
+         break;
+   }
+}
+
 
 // Mouse callback routine.
 void mouseControl(int button, int state, int x, int y)
 {
    // Store the clicked point in the currentPoint variable when left button is pressed.
    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-
-      points.push_back(currentPoint);
-      currentPoint = Point(x, height - y); 
       lastClickedPoint.setCoords(x, height - y);
-      Line line(lastClickedPoint, currentPoint);  
-      lines.push_back(line);
-      Circle circle(lastClickedPoint, currentPoint);
-      circles.push_back(circle);
-      Square square(lastClickedPoint, currentPoint);
-      squares.push_back(square);
-      glutPostRedisplay();
+      currentPoint = Point(x, height - y); 
+      switch (shape) {
+         case 0: {
+            Line line(lastClickedPoint, currentPoint);  
+            lines.push_back(line);
+            break;
+         }
+         case 1: {
+            points.push_back(currentPoint);
+            break;
+         }
+         case 2: {
+            Circle circle(lastClickedPoint, currentPoint);
+            circles.push_back(circle);
+            break;
+         }
+         case 3: {
+            Square square(lastClickedPoint, currentPoint);
+            squares.push_back(square);
+            break;
+         }
+         glutPostRedisplay();
+      }
 
    }
 
    // Store the currentPoint in the points vector when left button is released.
    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
-      Circle circle(lastClickedPoint, currentPoint);
-      circles.push_back(circle);
-      Line line(lastClickedPoint, currentPoint);
-      lines.push_back(line);
-      Square square(lastClickedPoint, currentPoint);
-      squares.push_back(square);
-      glutPostRedisplay();
-   }
-   
-   if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) exit(0);
-   
-   glutPostRedisplay();
+      switch (shape)
+      {
+      case 0:
+      {
+         Line line(lastClickedPoint, currentPoint);
+         lines.push_back(line);
+         break;
+      }
+      case 1:
+      {
+         points.push_back(currentPoint);
+         break;
+      }
+      case 2:
+      {
+         Circle circle(lastClickedPoint, currentPoint);
+         circles.push_back(circle);
+         break;
+      }
+      case 3:
+      {
+         Square square(lastClickedPoint, currentPoint);
+         squares.push_back(square);
+         break;
+      }
+         glutPostRedisplay();
+      }
+
+         if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+            exit(0);
+
+         glutPostRedisplay();
+      }
 }
 
 // Mouse motion callback routine.
@@ -297,19 +384,6 @@ void resize(int w, int h)
 
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-}
-
-// Keyboard input processing routine.
-void keyInput(unsigned char key, int x, int y)
-{
-   switch (key) 
-   {
-      case 27:
-         exit(0);
-         break;
-      default:
-         break;
-   }
 }
 
 // Routine to output interaction instructions to the C++ window.
