@@ -20,7 +20,107 @@ static float pointSize = 3.0; // Size of point
 static int shape = 3;
 #define PI 3.14159265358979324
 static float R, G, B = 0;
-static bool justChanged = true;
+
+void lineButton(void)
+{
+    glColor3f(0.5, 0.5, 0.5); // Button color
+    glBegin(GL_QUADS);
+    glVertex2f(10, 10);    // Bottom-left corner of the button
+    glVertex2f(110, 10);   // Bottom-right corner of the button
+    glVertex2f(110, 60);   // Top-right corner of the button
+    glVertex2f(10, 60);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(20, 35);   // Position of the text
+    glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)"Line");
+}
+
+void circleButton(void)
+{
+    glColor3f(0.5, 0.5, 0.5); // Button color
+    glBegin(GL_QUADS);
+    glVertex2f(120, 10);    // Bottom-left corner of the button
+    glVertex2f(220, 10);   // Bottom-right corner of the button
+    glVertex2f(220, 60);   // Top-right corner of the button
+    glVertex2f(120, 60);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(130, 35);   // Position of the text
+    glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)"Circle");
+}
+
+void squareButton(void)
+{
+    glColor3f(0.5, 0.5, 0.5); // Button color
+    glBegin(GL_QUADS);
+    glVertex2f(230, 10);    // Bottom-left corner of the button
+    glVertex2f(330, 10);   // Bottom-right corner of the button
+    glVertex2f(330, 60);   // Top-right corner of the button
+    glVertex2f(230, 60);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(240, 35);   // Position of the text
+    glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)"Square");
+}
+void redButton(void)
+{
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_QUADS);
+    glVertex2f(340, 40);    // Bottom-left corner of the button
+    glVertex2f(390, 40);   // Bottom-right corner of the button
+    glVertex2f(390, 60);   // Top-right corner of the button
+    glVertex2f(340, 60);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(350, 35);   // Position of the text
+}
+void greenButton(void)
+{
+    glColor3f(0.0, 1.0, 0.0);
+    glBegin(GL_QUADS);
+    glVertex2f(340, 10);    // Bottom-left corner of the button
+    glVertex2f(390, 10);   // Bottom-right corner of the button
+    glVertex2f(390, 30);   // Top-right corner of the button
+    glVertex2f(340, 30);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(350, 35);   // Position of the text
+}
+
+void blueButton(void)
+{
+    glColor3f(0.0, 0.0, 1.0);
+    glBegin(GL_QUADS);
+    glVertex2f(390, 40);    // Bottom-left corner of the button
+    glVertex2f(440, 40);   // Bottom-right corner of the button
+    glVertex2f(440, 60);   // Top-right corner of the button
+    glVertex2f(390, 60);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(350, 35);   // Position of the text
+}
+void blackButton(void)
+{
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_QUADS);
+    glVertex2f(390, 10);    // Bottom-left corner of the button
+    glVertex2f(440, 10);   // Bottom-right corner of the button
+    glVertex2f(440, 30);   // Top-right corner of the button
+    glVertex2f(390, 30);    // Top-left corner of the button
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0); // Text color
+    glRasterPos2f(350, 35);   // Position of the text
+}
+
+
+
 
 
 // Point class.
@@ -217,6 +317,13 @@ void drawScene(void)
    glClearColor(1.0, 1.0, 1.0, 0.0); // Set background color to white
    glClear(GL_COLOR_BUFFER_BIT);
    // lines
+   circleButton();
+   squareButton();
+   lineButton();
+   redButton();
+   greenButton();
+   blueButton();
+   blackButton();
    linesIterator = lines.begin();
    while (linesIterator != lines.end())
    {
@@ -326,36 +433,116 @@ void keyInput(unsigned char key, int x, int y)
 // Mouse callback routine.
 void mouseControl(int button, int state, int x, int y)
 {
-   // Store the clicked point in the currentPoint variable when left button is pressed.
-   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+
+   int viewportY = height - y;
+
+   // Check if the left mouse button is pressed inside the button area.
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 10 && x <= 110 && viewportY >= 10 && viewportY <= 60)
+   {
+      shape = 0;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 120 && x <= 220 && viewportY >= 10 && viewportY <= 60)
+   {
+      shape = 2;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 130 && x <= 330 && viewportY >= 10 && viewportY <= 60)
+   {
+      shape = 3;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 340 && x <= 390 && viewportY >= 30 && viewportY <= 60)
+   {
+      R = 1;
+      G = 0;
+      B = 0;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 340 && x <= 390 && viewportY >= 10 && viewportY <= 30)
+   {
+      R = 0;
+      G = 1;
+      B = 0;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 390 && x <= 440 && viewportY >= 10 && viewportY <= 30)
+   {
+      R = 0;
+      G = 0;
+      B = 0;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 390 && x <= 440 && viewportY >= 40 && viewportY <= 60)
+   {
+      R = 0;
+      G = 0;
+      B = 1;
+      lastClickedPoint.setCoords(0, 0);
+      currentPoint.setCoords(0, 0);
+      glutPostRedisplay();
+
+      glutPostRedisplay();
+      return; // Return after printing "hi" to avoid executing the rest of the code.
+   }
+   else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+   {
       lastClickedPoint.setCoords(x, height - y);
-      currentPoint = Point(x, height - y); 
-      switch (shape) {
-         case 0: {
-            Line line(lastClickedPoint, currentPoint);  
-            line.setColor(R, G, B);
-            lines.push_back(line);
-            break;
-         }
-         case 1: {
-            points.push_back(currentPoint);
-            break;
-         }
-         case 2: {
-            Circle circle(lastClickedPoint, currentPoint);
-            circle.setColor(R, G, B);
-            circles.push_back(circle);
-            break;
-         }
-         case 3: {
-            Square square(lastClickedPoint, currentPoint);
-            square.setColor(R, G, B);
-            squares.push_back(square);
-            break;
-         }
+      currentPoint = Point(x, height - y);
+      switch (shape)
+      {
+      case 0:
+      {
+         Line line(lastClickedPoint, currentPoint);
+         line.setColor(R, G, B);
+         lines.push_back(line);
+         break;
+      }
+      case 1:
+      {
+         points.push_back(currentPoint);
+         break;
+      }
+      case 2:
+      {
+         Circle circle(lastClickedPoint, currentPoint);
+         circle.setColor(R, G, B);
+         circles.push_back(circle);
+         break;
+      }
+      case 3:
+      {
+         Square square(lastClickedPoint, currentPoint);
+         square.setColor(R, G, B);
+         squares.push_back(square);
+         break;
+      }
          glutPostRedisplay();
       }
-
    }
 
    // Store the currentPoint in the points vector when left button is released.
@@ -452,10 +639,10 @@ int main(int argc, char **argv)
    glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE); 
 
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA); 
-   // glutInitWindowSize(100, 500);
-   // glutInitWindowPosition(100, 100); 
+   glutInitWindowSize(500, 500);
+   glutInitWindowPosition(100, 100); 
    glutCreateWindow("mouseMotion.cpp");
-   glutFullScreen();
+   // glutFullScreen();
    glutDisplayFunc(drawScene); 
    glutReshapeFunc(resize);  
    glutKeyboardFunc(keyInput);
@@ -469,7 +656,6 @@ int main(int argc, char **argv)
    glewExperimental = GL_TRUE; 
    glewInit(); 
    
-   cout << "hi" << endl;
    setup(); 
 
    glutMainLoop(); 
